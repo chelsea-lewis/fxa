@@ -170,44 +170,48 @@ export const CouponForm = ({
 
   return (
     <div
-      className={`coupon-component ${coupon ? 'has-coupon' : ''}`}
+      className={`p-4 text-base mt-6 w-full bg-white rounded-lg shadow mobileLandscape:m-0 mobileLandscape:mt-6 tablet:my-8 tablet:max-w-xs coupon-component ${
+        coupon ? 'has-coupon' : ''
+      }`}
       data-testid="coupon-component"
     >
       {hasCoupon ? (
-        <div className="coupon-header">
-          <h4>
-            <Localized id="coupon-discount-applied">
-              Discount Reward Applied
-            </Localized>
-          </h4>
-        </div>
+        <h4 className="m-0 mb-4">
+          <Localized id="coupon-discount-applied">
+            Discount Reward Applied
+          </Localized>
+        </h4>
       ) : (
-        <div className="coupon-header">
-          <h4>
-            <Localized id="coupon-discount">Discount</Localized>
-          </h4>
-        </div>
+        <h4 className="m-0 mb-4">
+          <Localized id="coupon-discount">Discount</Localized>
+        </h4>
       )}
       {hasCoupon ? (
-        <div className="flex" data-testid="coupon-hascoupon">
-          <div className="coupon-details">
-            <div>{promotionCode}</div>
-          </div>
+        <div
+          className="flex justify-between items-center"
+          data-testid="coupon-hascoupon"
+        >
+          <div>{promotionCode}</div>
           {readOnly ? null : (
-            <button
-              className={`button ${readOnly ? 'hidden' : ''}`}
-              onClick={removeCoupon}
-              disabled={subscriptionInProgress}
-              data-testid="coupon-remove-button"
-            >
-              <Localized id="coupon-remove">
-                <span>Remove</span>
-              </Localized>
-            </button>
+            <div className="w-28 ml-4">
+              <button
+                className={`button ${readOnly ? 'hidden' : ''}`}
+                onClick={removeCoupon}
+                disabled={subscriptionInProgress}
+                data-testid="coupon-remove-button"
+              >
+                <Localized id="coupon-remove">Remove</Localized>
+              </button>
+            </div>
           )}
         </div>
       ) : (
-        <form onSubmit={onSubmit} onChange={onChange} data-testid="coupon-form">
+        <form
+          className="flex justify-between items-center"
+          onSubmit={onSubmit}
+          onChange={onChange}
+          data-testid="coupon-form"
+        >
           <div className="input-row">
             <Localized attrs={{ placeholder: true }} id="coupon-enter-code">
               <input
@@ -226,22 +230,25 @@ export const CouponForm = ({
             </Localized>
           </div>
 
-          <button
-            name="apply"
-            className="button"
-            type="submit"
-            data-testid="coupon-button"
-            disabled={checkingCoupon || readOnly || subscriptionInProgress}
-          >
-            <Localized id="coupon-submit">
-              <span>Apply</span>
-            </Localized>
-          </button>
+          <div className="w-28 ml-4">
+            <button
+              name="apply"
+              className="button"
+              type="submit"
+              data-testid="coupon-button"
+              disabled={checkingCoupon || readOnly || subscriptionInProgress}
+            >
+              <Localized id="coupon-submit">Apply</Localized>
+            </button>
+          </div>
         </form>
       )}
       {error && (
         <Localized id={error}>
-          <div className="coupon-error" data-testid="coupon-error">
+          <div
+            className="coupon-error mt-4 w-[calc(100%-8rem)]"
+            data-testid="coupon-error"
+          >
             {error}
           </div>
         </Localized>

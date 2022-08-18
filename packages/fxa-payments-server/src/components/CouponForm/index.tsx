@@ -88,7 +88,7 @@ export const checkPromotionCode = async (
   }
 };
 
-type CouponFormProps = {
+export type CouponFormProps = {
   planId: string;
   readOnly: boolean;
   subscriptionInProgress: boolean;

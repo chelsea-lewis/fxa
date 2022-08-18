@@ -1,10 +1,43 @@
 import { storiesOf } from '@storybook/react';
 import React, { useState } from 'react';
 
-import CouponForm from '.';
+import { CouponForm, CouponFormProps } from '.';
 import MockApp from '../../../.storybook/components/MockApp';
 import { CouponDetails } from 'fxa-shared/dto/auth/payments/coupon';
 import { SELECTED_PLAN } from '../../lib/mock-data';
+// import { Meta } from '@storybook/react';
+
+// export default {
+//   title: 'components/Coupon',
+//   component: Coupon,
+// } as Meta;
+
+// const Subject = ({ ...props }: CouponFormProps) => {
+//   const [coupon, setCoupon] = useState<CouponDetails>();
+
+//   return (
+//     <MockApp>
+//       <CouponForm
+//         {...{
+//           ...props,
+//         }}
+//       />
+//     </MockApp>
+//   );
+// };
+
+// const storyWithProps = (props: CouponFormProps) => {
+//   const story = () => <Subject />;
+//   return story;
+// };
+
+// export const Default = storyWithProps(true, false);
+// export const ReadonlyWithCouponSubscriptionSuccess = storyWithProps(
+//   false,
+//   true
+// );
+// export const NoCouponSubscriptionInProgress = storyWithProps(true, false);
+// export const HasCouponSubscriptionInProgress = storyWithProps(false, true);
 
 storiesOf('components/Coupon', module)
   .add('default', () => {

@@ -6,6 +6,7 @@
 
 const flowMetrics = require('../flow-metrics');
 const logger = require('../logging/log')('routes.index');
+const { getTraceParentId } = require('fxa-shared/tracing/tracing-node');
 
 module.exports = function (config) {
   let featureFlags;
@@ -134,6 +135,7 @@ module.exports = function (config) {
         featureFlags: encodeURIComponent(JSON.stringify(flags)),
         flowBeginTime: flowEventData.flowBeginTime,
         flowId: flowEventData.flowId,
+        traceparent: getTraceParentId(),
         // Note that staticResourceUrl is added to templates as a build step
         staticResourceUrl: STATIC_RESOURCE_URL,
       });

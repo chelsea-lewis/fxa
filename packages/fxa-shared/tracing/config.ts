@@ -7,6 +7,7 @@
  */
 export type TracingOpts = {
   serviceName: string;
+  sampleRate?: number;
   console?: {
     enabled: boolean;
   };

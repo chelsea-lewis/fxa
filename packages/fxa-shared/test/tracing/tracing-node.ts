@@ -17,7 +17,7 @@ import {
   SpanExporter,
 } from '@opentelemetry/sdk-trace-base';
 
-describe.only('node-tracing', () => {
+describe('node tracing', () => {
   const sandbox = sinon.createSandbox();
 
   const spies: any = {
@@ -43,20 +43,21 @@ describe.only('node-tracing', () => {
     newGcpTraceExporter: sandbox.mock().returns(new GcpTraceExporter()),
   };
 
-  const tracing = proxyquire('../../tracing/node-tracing', {
-    '@opentelemetry/exporter-jaeger': {
-      JaegerExporter: mocks.newJaegerExporter,
-    },
-    '@opentelemetry/sdk-trace-base': {
-      BatchSpanProcessor: mocks.newBatchSpanProcessor,
-      ConsoleSpanExporter: mocks.newConsoleSpanExporter,
-      SimpleSpanProcessor: mocks.newSimpleSpanProcessor,
-    },
-    '@google-cloud/opentelemetry-cloud-trace-exporter': {
-      TraceExporter: mocks.newGcpTraceExporter,
-    },
+  const tracing = proxyquire('../../tracing/tracing-node', {
+    './tracing-base': proxyquire('../../tracing/tracing-base', {
+      '@opentelemetry/exporter-jaeger': {
+        JaegerExporter: mocks.newJaegerExporter,
+      },
+      '@opentelemetry/sdk-trace-base': {
+        BatchSpanProcessor: mocks.newBatchSpanProcessor,
+        ConsoleSpanExporter: mocks.newConsoleSpanExporter,
+        SimpleSpanProcessor: mocks.newSimpleSpanProcessor,
+      },
+      '@google-cloud/opentelemetry-cloud-trace-exporter': {
+        TraceExporter: mocks.newGcpTraceExporter,
+      },
+    }),
   });
-  const { NodeTracingInitializer } = tracing;
 
   afterEach(() => {
     sandbox.reset();
@@ -67,20 +68,19 @@ describe.only('node-tracing', () => {
   });
 
   it('requires a service name', () => {
+    const initializer = new tracing.NodeTracing({ serviceName: '' });
+
     expect(() => {
-      new tracing.NodeTracingInitializer({
-        serviceName: '',
-      });
+      initializer.init();
     }).to.throws('Missing config. serviceName must be defined!');
+
     const processor = tracing.provider?.getTracer;
 
     assert.isUndefined(processor);
   });
 
   it('enables initializes with no modes', () => {
-    new NodeTracingInitializer({
-      serviceName: 'test',
-    });
+    new tracing.NodeTracing({ serviceName: 'test' }).init();
 
     sinon.assert.calledOnce(spies.register);
     sinon.assert.notCalled(mocks.newJaegerExporter);
@@ -90,7 +90,7 @@ describe.only('node-tracing', () => {
 
   describe('console', () => {
     it('enables', () => {
-      new NodeTracingInitializer(
+      new tracing.NodeTracing(
         {
           serviceName: 'test',
           console: {
@@ -98,7 +98,7 @@ describe.only('node-tracing', () => {
           },
         },
         spies.logger
-      );
+      ).init();
 
       sinon.assert.calledOnce(mocks.newConsoleSpanExporter);
       sinon.assert.notCalled(mocks.newJaegerExporter);
@@ -109,7 +109,7 @@ describe.only('node-tracing', () => {
 
   describe('jaeger', () => {
     it('enables', () => {
-      new NodeTracingInitializer(
+      new tracing.NodeTracing(
         {
           serviceName: 'test',
           jaeger: {
@@ -117,7 +117,7 @@ describe.only('node-tracing', () => {
           },
         },
         spies.logger
-      );
+      ).init();
 
       assert.ok(spies.register.calledTwice);
       sinon.assert.notCalled(mocks.newConsoleSpanExporter);
@@ -128,7 +128,7 @@ describe.only('node-tracing', () => {
 
   describe('gcp', () => {
     it('enables gcp logging', () => {
-      new NodeTracingInitializer(
+      new tracing.NodeTracing(
         {
           serviceName: 'test',
           gcp: {
@@ -136,7 +136,7 @@ describe.only('node-tracing', () => {
           },
         },
         spies.logger
-      );
+      ).init();
 
       assert.ok(spies.register.calledTwice);
       sinon.assert.notCalled(mocks.newConsoleSpanExporter);
@@ -155,7 +155,7 @@ describe.only('node-tracing', () => {
         spies.logger
       );
       sinon.assert.calledWith(spies.logger.warn, 'node-tracing', {
-        msg: 'skipping node-tracing initialization. serviceName must be defined.',
+        msg: 'skipping tracing initialization. serviceName must be defined.',
       });
     });
 
@@ -176,7 +176,7 @@ describe.only('node-tracing', () => {
         spies.logger
       );
       sinon.assert.calledWith(spies.logger.warn, 'node-tracing', {
-        msg: 'skipping node-tracing initialization. node-tracing already initialized.',
+        msg: 'tracing already initialized!',
       });
     });
   });

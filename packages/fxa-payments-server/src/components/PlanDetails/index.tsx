@@ -211,7 +211,7 @@ export const PlanDetails = ({
 
                 {infoBoxMessage && (
                   infoBoxMessage.couponDurationDate ? (
-                    <div className="coupon-info" data-testid="coupon-success-with-date">
+                    <div className="green-icon-text coupon-info" data-testid="coupon-success-with-date">
                       <img src={infoLogo} alt="" />
 
                       <Localized
@@ -227,7 +227,7 @@ export const PlanDetails = ({
                       </Localized>
                     </div>
                   ) : (
-                    <div className="coupon-info" data-testid="coupon-success">
+                    <div className="green-icon-text coupon-info" data-testid="coupon-success">
                       <img src={infoLogo} alt="" />
 
                       <Localized id={infoBoxMessage.message}>

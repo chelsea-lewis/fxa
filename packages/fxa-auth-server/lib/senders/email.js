@@ -1661,6 +1661,7 @@ module.exports = function (log, config, bounces) {
         link: links.link,
         location: message.location,
         privacyUrl: links.privacyUrl,
+        productName: 'Firefox',
         passwordChangeLink: links.passwordChangeLink,
         passwordChangeLinkAttributes: links.passwordChangeLinkAttributes,
         supportLinkAttributes: links.supportLinkAttributes,

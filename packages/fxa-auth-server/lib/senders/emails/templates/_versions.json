@@ -43,7 +43,7 @@
   "postRemoveTwoStepAuthentication": 8,
   "postConsumeRecoveryCode": 5,
   "postNewRecoveryCodes": 5,
-  "passwordResetAccountRecovery": 6,
+  "passwordResetAccountRecovery": 7,
   "postAddAccountRecovery": 7,
   "postRemoveAccountRecovery": 6,
   "cadReminderFirst": 3,

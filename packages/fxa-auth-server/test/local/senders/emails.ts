@@ -900,7 +900,7 @@ const TESTS: [string, any, Record<string, any>?][] = [
   ])],
 
   ['passwordResetAccountRecoveryEmail', new Map<string, Test | any>([
-    ['subject', { test: 'equal', expected: 'Password updated using recovery key' }],
+    ['subject', { test: 'equal', expected: 'Your password has been reset' }],
     ['headers', new Map([
       ['X-Link', { test: 'equal', expected: configUrl('createAccountRecoveryUrl', 'password-reset-account-recovery-success', 'create-recovery-key', 'email', 'uid') }],
       ['X-SES-MESSAGE-TAGS', { test: 'equal', expected: sesMessageTagsHeaderValue('passwordResetAccountRecovery') }],
@@ -908,7 +908,7 @@ const TESTS: [string, any, Record<string, any>?][] = [
       ['X-Template-Version', { test: 'equal', expected: TEMPLATE_VERSIONS.passwordResetAccountRecovery }],
     ])],
     ['html', [
-      { test: 'include', expected: 'Your account password was reset with a recovery key' },
+      { test: 'include', expected: 'Password reset successfully' },
       { test: 'include', expected: decodeUrl(configHref('createAccountRecoveryUrl', 'password-reset-account-recovery-success', 'create-recovery-key', 'email', 'uid')) },
       { test: 'include', expected: decodeUrl(configHref('initiatePasswordChangeUrl', 'password-reset-account-recovery-success', 'change-password', 'email')) },
       { test: 'include', expected: decodeUrl(configHref('privacyUrl', 'password-reset-account-recovery-success', 'privacy')) },
@@ -921,11 +921,11 @@ const TESTS: [string, any, Record<string, any>?][] = [
       { test: 'notInclude', expected: 'utm_source=email' },
     ]],
     ['text', [
-      { test: 'include', expected: 'Your account password was reset with a recovery key' },
+      { test: 'include', expected: 'Password reset successfully' },
       { test: 'include', expected: configUrl('createAccountRecoveryUrl', 'password-reset-account-recovery-success', 'create-recovery-key', 'email', 'uid') },
-      { test: 'include', expected: `please change your password.\n${configUrl('initiatePasswordChangeUrl', 'password-reset-account-recovery-success', 'change-password', 'email')}` },
+      { test: 'include', expected: `change your password right away: \n${configUrl('initiatePasswordChangeUrl', 'password-reset-account-recovery-success', 'change-password', 'email')}` },
       { test: 'include', expected: `Mozilla Privacy Policy\n${configUrl('privacyUrl', 'password-reset-account-recovery-success', 'privacy')}` },
-      { test: 'include', expected: `For more info, visit Mozilla Support: ${configUrl('supportUrl', 'password-reset-account-recovery-success', 'support')}` },
+      { test: 'include', expected: `For more info, visit Mozilla Support: \n${configUrl('supportUrl', 'password-reset-account-recovery-success', 'support')}` },
       { test: 'include', expected: `IP address: ${MESSAGE.ip}` },
       { test: 'include', expected: `${MESSAGE.location.city}, ${MESSAGE.location.stateCode}, ${MESSAGE.location.country} (estimated)` },
       { test: 'include', expected: `${MESSAGE.device.uaBrowser} on ${MESSAGE.device.uaOS} ${MESSAGE.device.uaOSVersion}` },

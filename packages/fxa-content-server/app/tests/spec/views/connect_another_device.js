@@ -122,6 +122,25 @@ describe('views/connect_another_device', () => {
       });
     });
 
+    describe('with `fxa_app_menu` entrypoint and `action=email`', () => {
+      beforeEach(() => {
+        sinon.stub(view, '_isSignedIn').callsFake(() => true);
+        relier.set('entrypoint', 'fxa_app_menu');
+        relier.set('context', 'fx_desktop_v3');
+        relier.set('action', 'email');
+        windowMock.navigator.userAgent =
+          'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:55.0) Gecko/20100101 Firefox/55.0';
+
+        return view.render().then(() => {
+          view.afterVisible();
+        });
+      });
+
+      it('shows the success message', () => {
+        assert.lengthOf(view.$(FXA_CONNECTED_SELECTOR), 1);
+      });
+    });
+
     describe('with a fennec user that is signed in', () => {
       beforeEach(() => {
         sinon.stub(view, 'getUserAgent').callsFake(() => {

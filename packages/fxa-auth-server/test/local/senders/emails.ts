@@ -1133,7 +1133,7 @@ const TESTS: [string, any, Record<string, any>?][] = [
   ])],
 
   ['postConsumeRecoveryCodeEmail', new Map<string, Test | any>([
-    ['subject', { test: 'equal', expected: 'Recovery code used' }],
+    ['subject', { test: 'equal', expected: '2 backup authentication codes left' }],
     ['headers', new Map([
       ['X-Link', { test: 'equal', expected: configUrl('accountSettingsUrl', 'account-consume-recovery-code', 'manage-account', 'email', 'uid') }],
       ['X-SES-MESSAGE-TAGS', { test: 'equal', expected: sesMessageTagsHeaderValue('postConsumeRecoveryCode') }],
@@ -1141,8 +1141,8 @@ const TESTS: [string, any, Record<string, any>?][] = [
       ['X-Template-Version', { test: 'equal', expected: TEMPLATE_VERSIONS.postConsumeRecoveryCode }],
     ])],
     ['html', [
-      { test: 'include', expected: 'Recovery code consumed' },
-      { test: 'include', expected: 'You have successfully consumed a recovery code from the following device:' },
+      { test: 'include', expected: 'You used a backup authentication code' },
+      { test: 'include', expected: 'It was used on:' },
       { test: 'include', expected: decodeUrl(configHref('accountSettingsUrl', 'account-consume-recovery-code', 'manage-account', 'email', 'uid')) },
       { test: 'include', expected: decodeUrl(configHref('initiatePasswordChangeUrl', 'account-consume-recovery-code', 'change-password', 'email')) },
       { test: 'include', expected: decodeUrl(configHref('privacyUrl', 'account-consume-recovery-code', 'privacy')) },
@@ -1155,10 +1155,10 @@ const TESTS: [string, any, Record<string, any>?][] = [
       { test: 'notInclude', expected: 'utm_source=email' },
     ]],
     ['text', [
-      { test: 'include', expected: 'Recovery code consumed' },
-      { test: 'include', expected: 'You have successfully consumed a recovery code from the following device:' },
+      { test: 'include', expected: 'You used a backup authentication code' },
+      { test: 'include', expected: 'It was used on:' },
       { test: 'include', expected: `Manage account:\n${configUrl('accountSettingsUrl', 'account-consume-recovery-code', 'manage-account', 'email', 'uid')}` },
-      { test: 'include', expected: `please change your password.\n${configUrl('initiatePasswordChangeUrl', 'account-consume-recovery-code', 'change-password', 'email')}` },
+      { test: 'include', expected: `you should change your password immediately at ${configUrl('initiatePasswordChangeUrl', 'account-consume-recovery-code', 'change-password', 'email')}` },
       { test: 'include', expected: `Mozilla Privacy Policy\n${configUrl('privacyUrl', 'account-consume-recovery-code', 'privacy')}` },
       { test: 'include', expected: `For more info, visit Mozilla Support: ${configUrl('supportUrl', 'account-consume-recovery-code', 'support')}` },
       { test: 'include', expected: `IP address: ${MESSAGE.ip}` },

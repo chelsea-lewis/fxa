@@ -1499,6 +1499,7 @@ module.exports = function (log, config, bounces) {
         ip: message.ip,
         link: links.link,
         location: message.location,
+        numberRemaining: message.numberRemaining,
         passwordChangeLink: links.passwordChangeLink,
         passwordChangeLinkAttributes: links.passwordChangeLinkAttributes,
         privacyUrl: links.privacyUrl,

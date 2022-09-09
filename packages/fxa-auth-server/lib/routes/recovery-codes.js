@@ -188,6 +188,7 @@ module.exports = (log, db, config, customs, mailer) => {
             uaOSVersion: ua.osVersion,
             uaDeviceType: ua.deviceType,
             uid,
+            numberRemaining: remaining,
           }),
         ];
 

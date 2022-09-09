@@ -42,7 +42,7 @@
   "postAddTwoStepAuthentication": 8,
   "postRemoveTwoStepAuthentication": 8,
   "postConsumeRecoveryCode": 5,
-  "postNewRecoveryCodes": 5,
+  "postNewRecoveryCodes": 6,
   "passwordResetAccountRecovery": 6,
   "postAddAccountRecovery": 7,
   "postRemoveAccountRecovery": 6,
